@@ -47,7 +47,8 @@ public class MainActivity extends AppCompatActivity {
 
                 AlarmManager.AlarmClockInfo alarmClockInfo = new AlarmManager.AlarmClockInfo(calendar.getTimeInMillis(),  getAlarmInfoPendingIntent());
 
-                
+                alarmManager.setAlarmClock(alarmClockInfo, getAlarmActionPendingIntent());
+                Toast.makeText(this, "Будильник установлен на " + sdf.format(calendar.getTime()), Toast.LENGTH_SHORT).show();
             });
 
             materialTimePicker.show(getSupportFragmentManager(), "tag_picker");
@@ -58,5 +59,11 @@ public class MainActivity extends AppCompatActivity {
         Intent alarmInfoIntent = new Intent(this, MainActivity.class);
         alarmInfoIntent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
         return PendingIntent.getActivity(this, 0, alarmInfoIntent, PendingIntent.FLAG_UPDATE_CURRENT);
+    }
+
+    private PendingIntent getAlarmActionPendingIntent() {
+        Intent intent = new Intent(this, AlarmActivity.class);
+        intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
+        return PendingIntent.getActivity(this, 1, intent, PendingIntent.FLAG_UPDATE_CURRENT);
     }
 }
